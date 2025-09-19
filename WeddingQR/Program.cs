@@ -38,8 +38,10 @@ namespace ConsoleApp2
             Console.WriteLine("Do you want to add a logo image? (y/n):");
             string imageChoice = Console.ReadLine() ?? "n";
             Bitmap? logoBitmap = null;
+            bool noImage = true;
             if (imageChoice.Trim().ToLower() == "y")
             {
+                noImage = false;
                 Console.WriteLine("Enter the path to the image file:");
                 string? imagePath = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(imagePath))
@@ -60,7 +62,7 @@ namespace ConsoleApp2
             QRCode qrCode = new QRCode(qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(100,
                 System.Drawing.ColorTranslator.FromHtml(colorHex),
-                Color.Transparent, logoBitmap, 0, 0);
+                Color.Transparent, logoBitmap, noImage ? 0: 20, noImage ? 0 : 20);
             qrCodeImage.Save("test2.png", ImageFormat.Png);
             Console.WriteLine("QR code saved as test2.png");
         }
